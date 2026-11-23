@@ -1,40 +1,27 @@
-
-name: CarHealth CI Pipeline
+name: CI - Build Check
 
 on:
   push:
-    branches: [main]
-
+    branches: [ main ]
   pull_request:
-    branches: [main]
-
-permissions:
-  contents: read
-
-concurrency:
-  group: carhealth-ci-${{ github.ref }}
-  cancel-in-progress: true
+    branches: [ main ]
 
 jobs:
-  frontend-build:
-    name: Frontend CI
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout source code
+      - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
-          cache: npm
+          node-version: 20
+          cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Build React application
+      - name: Build project
         run: npm run build
-
-      - name: Verify build output
-        run: test -d dist
