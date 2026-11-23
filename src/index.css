@@ -1,0 +1,248 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ch-bg: #0B1220;
+  --color-ch-surface: #111C2E;
+  --color-ch-card: #172338;
+  --color-ch-card-hover: #1C2B45;
+  --color-ch-blue: #3B82F6;
+  --color-ch-blue-hover: #2563EB;
+  --color-ch-cyan: #22D3EE;
+  --color-ch-text: #FFFFFF;
+  --color-ch-muted: #94A3B8;
+  --color-ch-border: #263449;
+  --color-ch-critical: #EF4444;
+  --color-ch-warning: #F59E0B;
+  --color-ch-healthy: #10B981;
+
+  --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    color-scheme: dark;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: #0B1220;
+    color: #FFFFFF;
+    overflow-x: hidden;
+  }
+
+  /* Custom sleek automotive scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #0B1220;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #263449;
+    border-radius: 9999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #3B82F6;
+  }
+}
+
+/* =========================================================
+   AUTOMOTIVE MOTION SYSTEM (GPU-accelerated transforms/opacity)
+   ========================================================= */
+
+@keyframes ch-wheel-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes ch-scan-horizontal {
+  0% {
+    transform: translateX(-18%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(118%);
+    opacity: 0;
+  }
+}
+
+@keyframes ch-light-trail {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.7;
+  }
+  80% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateX(-120%);
+    opacity: 0;
+  }
+}
+
+@keyframes ch-road-dash {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-80px);
+  }
+}
+
+@keyframes ch-ambient-float {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.45;
+  }
+  50% {
+    transform: translate3d(12px, -10px, 0) scale(1.06);
+    opacity: 0.7;
+  }
+}
+
+@keyframes ch-pulse-ring {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.7;
+  }
+  70% {
+    transform: scale(1.55);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.55);
+    opacity: 0;
+  }
+}
+
+@keyframes ch-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Wheel rotation anchored strictly to each wheel center */
+.ch-wheel-rotate {
+  transform-box: fill-box;
+  transform-origin: center center;
+  animation: ch-wheel-spin var(--wheel-speed, 1.5s) linear infinite;
+  will-change: transform;
+}
+
+.ch-wheel-paused {
+  animation-play-state: paused;
+}
+
+/* Horizontal diagnostic scan sweep */
+.ch-scan-beam {
+  animation: ch-scan-horizontal 3.8s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  will-change: transform, opacity;
+}
+
+/* Subtle automotive light trails */
+.ch-light-trail-1 {
+  animation: ch-light-trail 3.2s linear infinite;
+  will-change: transform, opacity;
+}
+
+.ch-light-trail-2 {
+  animation: ch-light-trail 4.4s linear infinite 1.1s;
+  will-change: transform, opacity;
+}
+
+.ch-light-trail-3 {
+  animation: ch-light-trail 2.6s linear infinite 0.5s;
+  will-change: transform, opacity;
+}
+
+.ch-road-motion {
+  animation: ch-road-dash 0.7s linear infinite;
+  will-change: transform;
+}
+
+.ch-ambient-glow {
+  animation: ch-ambient-float 8s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.ch-pulse-beacon {
+  animation: ch-pulse-ring 2.2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+
+.ch-skeleton-shimmer {
+  position: relative;
+  overflow: hidden;
+  background-color: #172338;
+}
+
+.ch-skeleton-shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(59, 130, 246, 0.08) 45%,
+    rgba(34, 211, 238, 0.12) 50%,
+    rgba(59, 130, 246, 0.08) 55%,
+    transparent 100%
+  );
+  animation: ch-shimmer 1.8s ease-in-out infinite;
+}
+
+/* Subtle telemetry grid backdrop */
+.ch-grid-bg {
+  background-image:
+    linear-gradient(to right, rgba(38, 52, 73, 0.28) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(38, 52, 73, 0.28) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* Glass automotive panel */
+.ch-glass {
+  background: rgba(17, 28, 46, 0.78);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+/* Respect reduced motion across all custom CSS animations */
+@media (prefers-reduced-motion: reduce) {
+  .ch-wheel-rotate,
+  .ch-scan-beam,
+  .ch-light-trail-1,
+  .ch-light-trail-2,
+  .ch-light-trail-3,
+  .ch-road-motion,
+  .ch-ambient-glow,
+  .ch-pulse-beacon,
+  .ch-skeleton-shimmer::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
